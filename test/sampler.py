@@ -2,7 +2,7 @@ import unittest
 from collections import defaultdict
 
 import torchvision.transforms as transforms
-from sampler import PKSampler
+from similarity.data.samplers.pk_sampler import PKSampler
 from torch.utils.data import DataLoader
 from torchvision.datasets import FakeData
 
@@ -13,12 +13,12 @@ class Tester(unittest.TestCase):
 
         # Ensure sampler does not allow p to be greater than num_classes
         dataset = FakeData(size=100, num_classes=10, image_size=(3, 1, 1))
-        targets = [target.item() for _, target in dataset]
+        targets = [target for _, target in dataset]
         self.assertRaises(AssertionError, PKSampler, targets, p, k)
 
         # Ensure p, k constraints on batch
         dataset = FakeData(size=1000, num_classes=100, image_size=(3, 1, 1), transform=transforms.ToTensor())
-        targets = [target.item() for _, target in dataset]
+        targets = [target for _, target in dataset]
         sampler = PKSampler(targets, p, k)
         loader = DataLoader(dataset, batch_size=p * k, sampler=sampler)
 
