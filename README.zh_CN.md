@@ -16,11 +16,11 @@
   <a href="http://commitizen.github.io/cz-cli/"><img src="https://img.shields.io/badge/commitizen-friendly-brightgreen.svg"></a>
 </p>
 
-Based on the [similarity](https://github.com/pytorch/vision/tree/main/references/similarity) implementation, the following functions have been added: 
+基于实现，添加了如下功能：
 
-1. Add configuration module to support configurable training parameters;
-2. Support multi-GPU training /  mixed precision training;
-3. Add a variety of preprocessing functions and training configuration.
+1. 训练参数可配置；
+2. 支持多GPU训练/混合精度训练；
+3. 添加多种预处理函数以及训练配置。
 
 ## Table of Contents
 
