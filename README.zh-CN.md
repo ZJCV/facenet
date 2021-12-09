@@ -1,7 +1,7 @@
 <div align="right">
   Language:
-    🇺🇸
-  <a title="Chinese" href="./README.zh-CN.md">🇨🇳</a>
+    🇨🇳
+  <a title="English" href="./README.md">🇺🇸</a>
 </div>
 
  <div align="center"><a title="" href="https://github.com/ZJCV/facenet"><img align="center" src="./imgs/facenet.png"></a></div>
