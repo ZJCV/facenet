@@ -9,7 +9,7 @@
 
 import torch
 import numpy as np
-from similarity.criterion.triplet_loss import _get_triplet_mask
+from similarity.criterion.loss import _get_triplet_mask
 
 if __name__ == '__main__':
     p = 8

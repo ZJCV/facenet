@@ -22,9 +22,9 @@ def add_custom_config(_C):
     _C.SIMILARITY.MARGIN = 1.0
     # p value for the p-norm distance to calculate between each vector pair
     _C.SIMILARITY.P = 2.0
-    # triplet loss mining way, supports
-    # batch_all
-    # batch_hard
+    # triplet loss mining way, now supports
+    # 1. "batch_all"
+    # 2. "batch_hard"
     _C.SIMILARITY.MINING = "batch_all"
 
     return _C

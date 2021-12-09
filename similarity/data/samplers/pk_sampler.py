@@ -1,5 +1,6 @@
 import random
-from collections import defaultdict
+from collections import defaultdict, Sized
+from typing import Optional
 
 import torch
 from torch.utils.data.sampler import Sampler

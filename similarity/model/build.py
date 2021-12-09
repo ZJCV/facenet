@@ -12,12 +12,13 @@ from torch.nn.parallel import DistributedDataParallel as DDP
 
 import zcls.util.distributed as du
 from zcls.model.norm_helper import convert_sync_bn
-from zcls.util.checkpoint import CheckPointer
+# from zcls.util.checkpoint import CheckPointer
 from zcls.util import logging
 
 logger = logging.get_logger(__name__)
 
 from .resnet.build import get_resnet
+from similarity.utils.checkpoint import CheckPointer
 
 
 def build_model(cfg, device):

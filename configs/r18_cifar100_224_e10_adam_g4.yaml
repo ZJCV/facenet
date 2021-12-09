@@ -1,9 +1,9 @@
-NUM_GPUS: 1
+NUM_GPUS: 4
 NUM_NODES: 1
 RANK_ID: 0
 DIST_BACKEND: "nccl"
 RNG_SEED: 1
-OUTPUT_DIR: 'outputs/fmnist/r50_fmnist_224_e10_adam_g1'
+OUTPUT_DIR: 'outputs/cifar/r18_cifar100_224_e10_adam_g4'
 TRAIN:
   LOG_STEP: 10
   GRADIENT_ACCUMULATE_STEP: 1
@@ -20,9 +20,9 @@ SIMILARITY:
   P: 2.0
   MINING: "batch_all"
 DATASET:
-  NAME: 'FashionMNIST'
-  TRAIN_ROOT: 'data/fmnist'
-  TEST_ROOT: 'data/fmnist'
+  NAME: 'PKDataset'
+  TRAIN_ROOT: 'data/cifar/train'
+  TEST_ROOT: 'data/cifar/test'
 TRANSFORM:
   TRAIN_METHODS: ('Resize', 'Normalize', 'ToTensor')
   TEST_METHODS: ('Resize', 'Normalize', 'ToTensor')
@@ -38,9 +38,9 @@ DATALOADER:
   PREFETCHER: True
 MODEL:
   HEAD:
-    NUM_CLASSES: 128
+    NUM_CLASSES: 100
   RECOGNIZER:
-    NAME: 'resnet50'
+    NAME: 'resnet18'
   CRITERION:
     NAME: 'TripletMarginLoss'
 OPTIMIZER:

@@ -12,20 +12,22 @@ import torch
 # from zcls.model.recognizers.build import build_recognizer
 from zcls.optim.lr_schedulers.build import build_lr_scheduler
 from zcls.optim.optimizers.build import build_optimizer
-from zcls.util import logging
-from zcls.util.checkpoint import CheckPointer
+# from zcls.util import logging
+# from zcls.util.checkpoint import CheckPointer
 from zcls.util.collect_env import collect_env_info
 from zcls.util.distributed import init_distributed_training, get_device, get_local_rank, synchronize
 from zcls.util.misc import launch_job
 from zcls.util.parser import parse_args, load_config
-
-logger = logging.get_logger(__name__)
 
 from similarity.config import cfg
 from similarity.data.build import build_data
 from similarity.criterion.build import build_criterion
 from similarity.model.build import build_model
 from similarity.engine.trainer import do_train
+from similarity.utils.checkpoint import CheckPointer
+from similarity.utils import logging
+
+logger = logging.get_logger(__name__)
 
 
 def train(cfg):

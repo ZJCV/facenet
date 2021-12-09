@@ -8,6 +8,7 @@
 """
 
 from zcls.model import registry
+
 from .triplet_loss import TripletMarginLoss
 
 

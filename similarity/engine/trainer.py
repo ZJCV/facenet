@@ -21,15 +21,17 @@ from zcls.config.key_word import KEY_LOSS
 from zcls.util.metric_logger import MetricLogger, update_stats, log_iter_stats, log_epoch_stats
 from zcls.util.precise_bn import calculate_and_update_precise_bn
 from zcls.util.distributed import is_master_proc, synchronize
-from zcls.util import logging
+# from zcls.util import logging
 from zcls.util.prefetcher import Prefetcher
 
 # from zcls.engine.inference import do_evaluation
-from zcls.data.build import shuffle_dataset
-
-logger = logging.get_logger(__name__)
+# from zcls.data.build import shuffle_dataset
 
 from .inference import do_evaluation
+from ..data.build import shuffle_dataset
+from similarity.utils import logging
+
+logger = logging.get_logger(__name__)
 
 
 def do_train(cfg, arguments,
@@ -52,6 +54,7 @@ def do_train(cfg, arguments,
 
     start_epoch = arguments['cur_epoch']
     epoch_iters = len(train_data_loader)
+    print('epoch_iters: ', epoch_iters)
     max_iter = (max_epoch + 1 - start_epoch) * epoch_iters
     current_iterations = 0
 
@@ -71,6 +74,10 @@ def do_train(cfg, arguments,
         shuffle_dataset(train_data_loader, cur_epoch, is_shuffle=cfg.DATALOADER.RANDOM_SAMPLE)
         data_loader = Prefetcher(train_data_loader, device) if cfg.DATALOADER.PREFETCHER else train_data_loader
         for iteration, (images, targets) in enumerate(data_loader):
+            # if iteration % 100 == 0:
+            #     do_evaluation(cfg, model, test_data_loader, device)
+            #     model.train()
+
             if not cfg.DATALOADER.PREFETCHER:
                 images = images.to(device=device, non_blocking=True)
                 targets = targets.to(device=device, non_blocking=True)
@@ -130,6 +137,7 @@ def do_train(cfg, arguments,
                                               global_step=global_step)
                 summary_writer.add_scalar('lr', optimizer.param_groups[0]['lr'], global_step=global_step)
 
+        synchronize()
         if cfg.DATALOADER.PREFETCHER:
             data_loader.release()
             del data_loader
@@ -148,14 +156,14 @@ def do_train(cfg, arguments,
                     cfg.NUM_GPUS > 0,
                 )
 
-            do_evaluation(model, test_data_loader, device)
+            do_evaluation(cfg, model, test_data_loader, device)
             model.train()
 
     if eval_epoch > 0:
         logger.info('Start final evaluating...')
         torch.cuda.empty_cache()  # speed up evaluating after training finished
         # eval_results = do_evaluation(cfg, model, test_data_loader, device)
-        eval_results = do_evaluation(model, test_data_loader, device)
+        eval_results = do_evaluation(cfg, model, test_data_loader, device)
 
     if is_master_proc():
         check_pointer.save("model_final", **arguments)

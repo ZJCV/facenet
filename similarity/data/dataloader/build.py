@@ -10,6 +10,7 @@
 from torch.utils.data import DataLoader
 from zcls.data.datasets.mp_dataset import MPDataset
 
+from ..datasets.pk_dataset import PKDataset
 from ..samplers.build import build_sampler
 
 
@@ -20,7 +21,7 @@ def build_dataloader(cfg, dataset, is_train=True):
     else:
         batch_size = cfg.DATALOADER.TEST_BATCH_SIZE
 
-    sampler = None if isinstance(dataset, MPDataset) else build_sampler(cfg, dataset, is_train)
+    sampler = None if isinstance(dataset, (PKDataset, MPDataset)) else build_sampler(cfg, dataset, is_train)
     data_loader = DataLoader(dataset,
                              num_workers=cfg.DATALOADER.NUM_WORKERS,
                              sampler=sampler,
