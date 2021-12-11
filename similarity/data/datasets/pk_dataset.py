@@ -80,7 +80,6 @@ class PKDataset(IterableDataset, ABC):
     def __iter__(self):
         indices = self.get_indices()
 
-        print('0')
         img_list, label_list = get_subset_data(self.data_path, indices)
         assert len(img_list) == len(label_list)
 
