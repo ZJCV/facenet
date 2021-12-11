@@ -19,4 +19,4 @@
 
 |   arch   |  dataset | optimizer | epochs | gpus |     eval type     | accuracy | thresold |
 |:--------:|:--------:|:---------:|:------:|:----:|:-----------------:|:--------:|:--------:|
-| ResNet50 | FMNIST |    ADAM   |   10   |   1  | Face Verficiation |  97.555% |   0.52  |
+| ResNet50 | FMNIST |    ADAM   |   10   |   1  | Face Verficiation |  98.142% |   0.73  |
