@@ -21,7 +21,7 @@
 基于[similarity](https://github.com/pytorch/vision/tree/main/references/similarity)实现，增加了如下功能：
 
 1. 通过配置文件模块设置训练参数；
-2. 支持多`GPU`训练/混合精度训练；
+2. 支持多`GPU`训练以及混合精度训练；
 3. 添加多种预处理函数以及训练配置。
 
 ## 内容列表
@@ -53,11 +53,11 @@ $ pip install -r requirements.txt
 
 1. 获取数据文件。查看[how to get data](./docs/how-to-get-data.md)
 2. 训练
-   1. 单GPU训练
+   1. 单`GPU`训练
       ```angular2html
       $ CUDA_VISIBLE_DEVICES=0 python tools/train.py -cfg=configs/lfw/r18_lfw_224_e2_adam_g1.yaml
       ```
-   2. 多GPU训练
+   2. 多`GPU`训练
       ```angular2html
       $ CUDA_VISIBLE_DEVICES=0,1,2,3 python tools/train.py -cfg=configs/lfw/r18_lfw_224_e2_adam_g4.yaml
       ```

@@ -19,7 +19,7 @@
 Based on the [similarity](https://github.com/pytorch/vision/tree/main/references/similarity) implementation, the following functions have been added: 
 
 1. Add configuration file module to support configurable training parameters;
-2. Support multi-GPU training /  mixed precision training;
+2. Support Multi-GPU training  and  Mixed-Precision training;
 3. Add a variety of preprocessing functions and training configuration.
 
 ## Table of Contents
