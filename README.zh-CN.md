@@ -7,7 +7,7 @@
  <div align="center"><a title="" href="https://github.com/ZJCV/facenet"><img align="center" src="./imgs/facenet.png"></a></div>
 
 <p align="center">
-  «facenet» re-implements the paper <a href="https://arxiv.org/abs/1503.03832">FaceNet: A Unified Embedding for Face Recognition and Clustering</a>
+  «facenet»复现了论文<a href="https://arxiv.org/abs/1503.03832">FaceNet: A Unified Embedding for Face Recognition and Clustering</a>
 <br>
 <br>
 <br>
