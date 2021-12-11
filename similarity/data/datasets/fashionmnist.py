@@ -11,7 +11,9 @@ from torch.utils.data import Dataset
 import torchvision.datasets as datasets
 
 from zcls.data.datasets.util import default_converter
-from zcls.data.datasets.evaluator.general_evaluator import GeneralEvaluator
+# from zcls.data.datasets.evaluator.general_evaluator import GeneralEvaluator
+
+from .evaluator.verification_evaluator import VerificationEvaluator
 
 
 class FashionMNIST(Dataset):
@@ -40,7 +42,8 @@ class FashionMNIST(Dataset):
         return self.data_set.__len__()
 
     def _update_evaluator(self, top_k):
-        self.evaluator = GeneralEvaluator(self.classes, top_k=top_k)
+        # self.evaluator = GeneralEvaluator(self.classes, top_k=top_k)
+        self.evaluator = VerificationEvaluator()
 
     def __repr__(self):
         return self.__class__.__name__ + ' (' + self.root + ')'
