@@ -7,7 +7,7 @@ OUTPUT_DIR: 'outputs/fmnist/r50_fmnist_224_e10_adam_g1'
 TRAIN:
   LOG_STEP: 10
   GRADIENT_ACCUMULATE_STEP: 1
-  MAX_EPOCH: 2
+  MAX_EPOCH: 10
   SAVE_EPOCH: 1
   EVAL_EPOCH: 1
   RESUME: False
