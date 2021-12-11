@@ -16,31 +16,44 @@
   <a href="http://commitizen.github.io/cz-cli/"><img src="https://img.shields.io/badge/commitizen-friendly-brightgreen.svg"></a>
 </p>
 
+* 解析：[ FaceNet: A Unified Embedding for Face Recognition and Clustering](https://blog.zhujian.life/posts/d2015a83.html)
+
 基于[similarity](https://github.com/pytorch/vision/tree/main/references/similarity)实现，增加了如下功能：
 
 1. 通过配置文件模块设置训练参数；
 2. 支持多`GPU`训练/混合精度训练；
 3. 添加多种预处理函数以及训练配置。
 
-## Table of Contents
+## 内容列表
 
-- [Table of Contents](#table-of-contents)
-- [Background](#background)
-- [Usage](#usage)
-- [Maintainers](#maintainers)
+- [内容列表](#内容列表)
+- [背景](#背景)
+- [安装](#安装)
+- [用法](#用法)
+- [主要维护人员](#主要维护人员)
 - [Thanks](#thanks)
-- [Contributing](#contributing)
-- [License](#license)
+- [参与贡献方式](#参与贡献方式)
+- [许可证](#许可证)
 
-## Background
+## 背景
+
+[facenet](https://arxiv.org/abs/1503.03832)是一篇非常优秀的人脸识别论文，它创新性的提出了一种新的训练范式 - 三元组损失（`triplet loss`）训练。三元组损失的核心思想在于缩小同类人脸之间的欧式距离的同时尽可能的的扩大不同类之间的距离，每次训练都需要采集训练图像（锚点）以及同类正样本和不同类负样本。
+
+[similarity](https://github.com/pytorch/vision/tree/main/references/similarity)提供了一个非常棒的`facenet`训练工程。每轮训练开始之前先通过采样器对数据进行分配，保证每批次数据中包含`P`个类别以及每个类别拥有`K`个训练样本；完成前向计算后对同批次数据进行两两计算，采集符合`semi-hard`定义（*负样本并没有比正样本接近于锚点，但是其距离仍位于边界范围内*）的正负样本对参与损失函数计算。
+
+上述工程的不足之处在于它并不支持多`GPU`训练、混合精度训练以及没有很好的模块化设计导致扩展性不强，不能够直接作用于实际应用。 为了更好的训练`facenet`，本仓库基于[similarity](https://github.com/pytorch/vision/tree/main/references/similarity)进行了增强操作，提供了更友好的训练实现。
+
+## 安装
+
+```
+$ pip install -r requirements.txt
+```
+
+## 用法
 
 ...
 
-## Usage
-
-...
-
-## Maintainers
+## 主要维护人员
 
 * zhujian - *Initial work* - [zjykzj](https://github.com/zjykzj)
 
@@ -61,18 +74,16 @@
 }
 ```
 
-## Contributing
+## 参与贡献方式
 
-Anyone's participation is welcome! Open an [issue](https://github.com/ZJCV/facenet/issues) or submit PRs.
+欢迎任何人的参与！打开[issue](https://github.com/ZJCV/facenet/issues)或提交合并请求。
 
-Small note:
+注意:
 
-* Git submission specifications should be complied
-  with [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0-beta.4/)
-* If versioned, please conform to the [Semantic Versioning 2.0.0](https://semver.org) specification
-* If editing the README, please conform to the [standard-readme](https://github.com/RichardLitt/standard-readme)
-  specification.
+* `GIT`提交，请遵守[Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0-beta.4/)规范
+* 语义版本化，请遵守[Semantic Versioning 2.0.0](https://semver.org)规范
+* `README`编写，请遵守[standard-readme](https://github.com/RichardLitt/standard-readme)规范
 
-## License
+## 许可证
 
 [Apache License 2.0](LICENSE) © 2021 zjykzj

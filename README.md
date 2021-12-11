@@ -34,7 +34,11 @@ Based on the [similarity](https://github.com/pytorch/vision/tree/main/references
 
 ## Background
 
-...
+[facenet](https://arxiv.org/ABS/1503.03832) is an excellent face recognition paper, which innovatively puts forward a new training paradigm - `triplet loss training`. The core idea of triple loss is to reduce the Euclidean distance between similar faces and expand the distance between different classes as much as possible. Every training needs to collect training images (*anchor points*), positive samples of the same class and negative samples of different classes. 
+
+[similarity](https://github.com/pytorch/vision/tree/main/references/similarity) provides an excellent `facenet`' training project. Before each round of training, distribute the data through the sampler to ensure that each batch of data contains `p` categories and each category has `k` training samples; After the forward calculation is completed, pairwise calculation is carried out on the same batch of data, and the positive and negative sample pairs that meet the definition of `semi-hard` (*the negative sample is not closer to the anchor point than the positive sample, but its distance is still within the boundary range*) are collected to participate in the loss function calculation. 
+
+The deficiency of the above project lies in that it does not support multi-GPU training, mixed precision training and no good modular design, which leads to weak scalability and can not be directly applied to practical applications. In order to better train `facenet`, this warehouse has enhanced the operation based on [similarity](https://github.com/pytorch/vision/tree/main/references/similarity), providing a more friendly training implementation. 
 
 ## Usage
 
