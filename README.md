@@ -22,6 +22,8 @@ Based on the [similarity](https://github.com/pytorch/vision/tree/main/references
 2. Support Multi-GPU training  and  Mixed-Precision training;
 3. Add a variety of preprocessing functions and training configuration.
 
+About training results for FMNIST/CIFAR/LFW, see [details](docs/README.md)
+
 ## Table of Contents
 
 - [Table of Contents](#table-of-contents)
