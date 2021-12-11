@@ -24,10 +24,9 @@ from zcls.util.distributed import is_master_proc, synchronize
 # from zcls.util import logging
 from zcls.util.prefetcher import Prefetcher
 
-# from zcls.engine.inference import do_evaluation
+from zcls.engine.inference import do_evaluation
 # from zcls.data.build import shuffle_dataset
 
-from .inference import do_evaluation
 from ..data.build import shuffle_dataset
 from similarity.utils import logging
 
@@ -70,14 +69,11 @@ def do_train(cfg, arguments,
     logger.info("Start epoch: {}".format(start_epoch))
     start_training_time = time.time()
     end = time.time()
+
     for cur_epoch in range(start_epoch, max_epoch + 1):
         shuffle_dataset(train_data_loader, cur_epoch, is_shuffle=cfg.DATALOADER.RANDOM_SAMPLE)
         data_loader = Prefetcher(train_data_loader, device) if cfg.DATALOADER.PREFETCHER else train_data_loader
         for iteration, (images, targets) in enumerate(data_loader):
-            # if iteration % 100 == 0:
-            #     do_evaluation(cfg, model, test_data_loader, device)
-            #     model.train()
-
             if not cfg.DATALOADER.PREFETCHER:
                 images = images.to(device=device, non_blocking=True)
                 targets = targets.to(device=device, non_blocking=True)
@@ -162,7 +158,6 @@ def do_train(cfg, arguments,
     if eval_epoch > 0:
         logger.info('Start final evaluating...')
         torch.cuda.empty_cache()  # speed up evaluating after training finished
-        # eval_results = do_evaluation(cfg, model, test_data_loader, device)
         eval_results = do_evaluation(cfg, model, test_data_loader, device)
 
     if is_master_proc():

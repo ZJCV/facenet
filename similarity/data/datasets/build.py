@@ -7,8 +7,6 @@
 @description: 
 """
 
-from zcls.data.datasets.mp_dataset import MPDataset
-
 from .fashionmnist import FashionMNIST
 from .pk_dataset import PKDataset
 
@@ -17,6 +15,7 @@ def build_dataset(cfg, transform=None, target_transform=None, is_train=True, **k
     dataset_name = cfg.DATASET.NAME
     data_root = cfg.DATASET.TRAIN_ROOT if is_train else cfg.DATASET.TEST_ROOT
     top_k = cfg.DATASET.TOP_K
+    keep_rgb = cfg.DATASET.KEEP_RGB
 
     if dataset_name == 'FashionMNIST':
         dataset = FashionMNIST(data_root, train=is_train, transform=transform, target_transform=target_transform,
@@ -31,13 +30,10 @@ def build_dataset(cfg, transform=None, target_transform=None, is_train=True, **k
         sample_per_label = cfg.SIMILARITY.SAMPLES_PER_LABEL
         num_workers = cfg.DATALOADER.NUM_WORKERS
 
-        if is_train:
-            dataset = PKDataset(labels_per_batch, sample_per_label, num_workers,
-                                data_root, transform=transform, target_transform=target_transform, top_k=top_k,
-                                shuffle=shuffle, num_gpus=num_gpus, rank_id=rank_id, epoch=epoch, drop_last=is_train)
-        else:
-            dataset = MPDataset(data_root, transform=transform, target_transform=target_transform, top_k=top_k,
-                                shuffle=shuffle, num_gpus=num_gpus, rank_id=rank_id, epoch=epoch, drop_last=is_train)
+        dataset = PKDataset(labels_per_batch, sample_per_label, num_workers,
+                            data_root, transform=transform, target_transform=target_transform, top_k=top_k,
+                            keep_rgb=keep_rgb, shuffle=shuffle, num_gpus=num_gpus, rank_id=rank_id, epoch=epoch,
+                            drop_last=is_train)
     else:
         raise ValueError(f"the dataset {dataset_name} does not exist")
 
