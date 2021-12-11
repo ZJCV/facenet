@@ -7,9 +7,6 @@
 @description: 
 """
 
-from torch.utils.data.distributed import DistributedSampler
-from torch.utils.data import RandomSampler
-
 from zcls.data.transforms.build import build_transform
 from zcls.data.datasets.mp_dataset import MPDataset
 
@@ -39,12 +36,3 @@ def shuffle_dataset(loader, cur_epoch, is_shuffle=False):
     dataset = loader.dataset
     if isinstance(dataset, (PKDataset, MPDataset)):
         dataset.set_epoch(cur_epoch)
-    else:
-        sampler = loader.sampler
-        assert isinstance(
-            sampler, (RandomSampler, DistributedSampler)
-        ), "Sampler type '{}' not supported".format(type(sampler))
-        # RandomSampler handles shuffling automatically
-        if isinstance(sampler, DistributedSampler):
-            # DistributedSampler shuffles data based on epoch
-            sampler.set_epoch(cur_epoch)
