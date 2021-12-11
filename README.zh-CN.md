@@ -31,7 +31,7 @@
 - [安装](#安装)
 - [用法](#用法)
 - [主要维护人员](#主要维护人员)
-- [Thanks](#thanks)
+- [致谢](#致谢)
 - [参与贡献方式](#参与贡献方式)
 - [许可证](#许可证)
 
@@ -51,13 +51,22 @@ $ pip install -r requirements.txt
 
 ## 用法
 
-...
+1. 获取数据文件。查看[how to get data](./docs/how-to-get-data.md)
+2. 训练
+   1. 单GPU训练
+      ```angular2html
+      $ CUDA_VISIBLE_DEVICES=0 python tools/train.py -cfg=configs/lfw/r18_lfw_224_e2_adam_g1.yaml
+      ```
+   2. 多GPU训练
+      ```angular2html
+      $ CUDA_VISIBLE_DEVICES=0,1,2,3 python tools/train.py -cfg=configs/lfw/r18_lfw_224_e2_adam_g4.yaml
+      ```
 
 ## 主要维护人员
 
 * zhujian - *Initial work* - [zjykzj](https://github.com/zjykzj)
 
-## Thanks
+## 致谢
 
 * [ pytorch/vision](https://github.com/pytorch/vision)
 

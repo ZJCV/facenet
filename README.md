@@ -26,6 +26,7 @@ Based on the [similarity](https://github.com/pytorch/vision/tree/main/references
 
 - [Table of Contents](#table-of-contents)
 - [Background](#background)
+- [Installation](#installation)
 - [Usage](#usage)
 - [Maintainers](#maintainers)
 - [Thanks](#thanks)
@@ -40,9 +41,24 @@ Based on the [similarity](https://github.com/pytorch/vision/tree/main/references
 
 The deficiency of the above project lies in that it does not support multi-GPU training, mixed precision training and no good modular design, which leads to weak scalability and can not be directly applied to practical applications. In order to better train `facenet`, this warehouse has enhanced the operation based on [similarity](https://github.com/pytorch/vision/tree/main/references/similarity), providing a more friendly training implementation. 
 
+## Installation
+
+```
+$ pip install -r requirements.txt
+```
+
 ## Usage
 
-...
+1. Get data file. See [how to get data](./docs/how-to-get-data.md)
+2. Training
+   1. Single GPU training
+      ```angular2html
+      $ CUDA_VISIBLE_DEVICES=0 python tools/train.py -cfg=configs/lfw/r18_lfw_224_e2_adam_g1.yaml
+      ```
+   2. Multi GPU training
+      ```angular2html
+      $ CUDA_VISIBLE_DEVICES=0,1,2,3 python tools/train.py -cfg=configs/lfw/r18_lfw_224_e2_adam_g4.yaml
+      ```
 
 ## Maintainers
 
