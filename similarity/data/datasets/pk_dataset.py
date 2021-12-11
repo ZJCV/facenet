@@ -85,11 +85,9 @@ class PKDataset(IterableDataset, ABC):
         assert len(img_list) == len(label_list)
 
         if self.is_train:
-            print('1')
             sampler = PKSampler(label_list, self.labels_per_batch, self.sample_per_label)
             sub_indices = list(sampler)
 
-            print('2')
             # 采集剩余的数据下标
             remain_indices = list(set(list(range(len(label_list)))) - set(sub_indices))
             # 打乱操作
@@ -98,11 +96,9 @@ class PKDataset(IterableDataset, ABC):
             sub_indices.extend(remain_indices)
             assert len(sub_indices) == len(label_list)
 
-            print('3')
             sub_img_list = np.array(img_list)[sub_indices]
             sub_label_list = np.array(label_list)[sub_indices]
 
-            print('4')
             return iter(self.parse_file(sub_img_list, sub_label_list))
         else:
             return iter(self.parse_file(img_list, label_list))
