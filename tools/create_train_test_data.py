@@ -56,6 +56,7 @@ def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('data_root', type=str, default=None, help='Data ROOT. Default: None')
     parser.add_argument('save_root', type=str, default=None, help='Save ROOT. Default: None')
+    parser.add_argument('ratio', type=float, default=0.2, help='Training/Test set split ratio. Default: 0.2')
     parser.add_argument('--test', default=False, action='store_true', help='Separate training and test set')
 
     return parser.parse_args()
@@ -119,7 +120,7 @@ def save(save_root, data_list, cls_list):
     save_to_cls(cls_list, cls_path)
 
 
-def main(data_root, save_root, is_split_test):
+def main(data_root, save_root, is_split_test, ratio):
     print('process ...')
     total_data_list = get_data(data_root)
     # get cls
@@ -130,7 +131,7 @@ def main(data_root, save_root, is_split_test):
     print('save ...')
     if is_split_test:
         X_train, X_test, _, _ = train_test_split(train_list, list(range(len(train_list))),
-                                                 test_size=0.2, random_state=0)
+                                                 test_size=ratio, random_state=0)
         train_root = os.path.join(save_root, 'train')
         os.makedirs(train_root)
         save(train_root, X_train, class_list)
@@ -147,6 +148,7 @@ if __name__ == '__main__':
 
     data_root = os.path.abspath(args.data_root)
     save_root = os.path.abspath(args.save_root)
+    ratio = args.ratio
     is_split_test = args.test
 
     if not os.path.isdir(data_root):
@@ -156,4 +158,4 @@ if __name__ == '__main__':
     if not os.path.exists(save_root):
         os.makedirs(save_root)
 
-    main(data_root, save_root, is_split_test)
+    main(data_root, save_root, is_split_test, ratio)
